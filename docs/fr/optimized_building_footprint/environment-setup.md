@@ -1,0 +1,176 @@
+# Configuration de l'environnement
+
+Ce tutoriel vous guide dans la configuration de l'environnement nécessaire pour accéder et manipuler les données GeoParquet de la couche optimisée des bâtiments. Les étapes varient selon l'outil que vous souhaitez utiliser : **Python/GDAL** ou **QGIS**.
+
+## Prérequis généraux
+
+Avant de commencer, assurez-vous d'avoir accès à :
+
+* **Une connexion internet** : pour télécharger les dépendances et accéder aux données distantes
+* **Un terminal/invite de commande** : pour exécuter les commandes d'installation
+* **Environ 500 Mo d'espace disque** : pour l'environnement conda et les dépendances
+
+---
+
+## Installation de l'environnement pour Python/GDAL
+
+Cette section est destinée aux utilisateurs qui souhaitent manipuler les données avec **Python (GeoPandas)** ou **GDAL (ogr2ogr)**.
+
+### Prérequis : Installation de Conda
+
+L'environnement Python recommandé utilise **conda** pour gérer les dépendances. Si vous n'avez pas encore installé conda :
+
+1. Téléchargez et installez [Miniconda](https://docs.conda.io/en/latest/miniconda.html) ou [Anaconda](https://www.anaconda.com/products/distribution)
+2. Vérifiez l'installation en ouvrant un terminal et en tapant :
+
+```bash
+conda --version
+```
+
+Si la commande retourne un numéro de version (ex: `conda 24.1.2`), conda est correctement installé.
+
+### Téléchargement du fichier d'environnement
+
+Le fichier d'environnement `environment_geoparquet.yaml` contient toutes les dépendances nécessaires pour manipuler les données GeoParquet avec Python et GDAL.
+
+!!! info "Téléchargement du fichier d'environnement"
+    [📄 Télécharger environment_geoparquet.yaml](../../assets/env/environment_geoparquet.yaml){ .md-button .md-button--primary }
+
+Enregistrez ce fichier dans un répertoire de travail sur votre ordinateur.
+
+### Création de l'environnement
+
+Ouvrez un terminal, naviguez vers le répertoire contenant le fichier `environment_geoparquet.yaml`, puis exécutez :
+
+```bash
+conda env create -f environment_geoparquet.yaml
+```
+
+Cette commande va :
+
+* Créer un environnement conda nommé `env_geoparquet`
+* Installer Python 3.12
+* Installer les bibliothèques nécessaires : `geopandas`, `pyarrow`, `shapely`, `pandas`, `numpy`
+* Installer GDAL ≥ 3.9 avec support GeoParquet
+
+!!! tip "Temps d'installation"
+    L'installation peut prendre quelques minutes selon votre connexion internet. Conda télécharge et installe automatiquement toutes les dépendances requises.
+
+### Activation de l'environnement
+
+Une fois l'environnement créé, activez-le avec :
+
+```bash
+conda activate env_geoparquet
+```
+
+Votre invite de commande devrait maintenant afficher `(env_geoparquet)` au début de la ligne, indiquant que l'environnement est actif.
+
+### Vérification de l'installation
+
+Pour vérifier que l'installation s'est déroulée correctement, exécutez les commandes suivantes :
+
+**1. Vérifier la version de Python :**
+```bash
+python --version
+```
+Attendu : `Python 3.12.x`
+
+**2. Vérifier la présence du driver GeoParquet dans GDAL :**
+```bash
+ogrinfo --formats | findstr Parquet
+```
+Attendu : Une ligne contenant `Parquet` (ex: `Parquet -raster,vector- (rw+): (Geo)Parquet`)
+
+**3. Tester les imports Python :**
+```bash
+python -c "import geopandas; import pyarrow; print('OK - Tous les modules sont correctement installés')"
+```
+Attendu : `OK - Tous les modules sont correctement installés`
+
+!!! warning "Résolution de problèmes"
+    Si une des commandes ci-dessus échoue, vérifiez que :
+
+    - Le fichier `environment_geoparquet.yaml` est complet et non corrompu
+
+    En cas de problème persistant, supprimez l'environnement avec `conda env remove -n env_geoparquet` et recommencez la création.
+
+---
+
+<a id="prerequis-qgis"></a>
+## Prérequis QGIS
+
+Cette section est destinée aux utilisateurs qui souhaitent visualiser et manipuler les données avec **QGIS**.
+
+### Installation de QGIS
+
+Pour accéder aux données GeoParquet dans QGIS, vous devez disposer de :
+
+* **QGIS ≥ 3.34 LTR** (Long Term Release) : version minimale avec support natif du format GeoParquet
+
+!!! info "Téléchargement de QGIS"
+    Téléchargez et installez QGIS depuis le site officiel : [https://qgis.org/download/](https://qgis.org/download/)
+
+**Vérification de la version :**
+
+1. Ouvrez QGIS
+2. Allez dans le menu `Aide` → `À propos`
+3. Vérifiez que la version affichée est ≥ 3.34
+
+### Plugin optionnel : GeoParquet Downloader
+
+Le plugin **GeoParquet Downloader** facilite le téléchargement de sous-ensembles de données GeoParquet basés sur l'emprise du canevas QGIS. Il est particulièrement utile pour extraire rapidement une zone d'intérêt.
+
+**Compatibilité :**
+
+* **QGIS ≥ 3.16** (version minimale pour le plugin)
+* Compatible avec QGIS 3.34+ recommandé
+
+**Installation du plugin :**
+
+1. Ouvrez QGIS
+2. Allez dans `Extensions` → `Installer/Gérer les extensions`
+3. Recherchez `GeoParquet Downloader`
+4. Cliquez sur `Installer le plugin`
+
+!!! tip "Plugin optionnel"
+    Le plugin GeoParquet Downloader n'est pas obligatoire. Vous pouvez charger des fichiers GeoParquet directement dans QGIS sans plugin (voir [Utilisation avec QGIS](acces-qgis.md#chargement-direct-du-geoparquet)).
+
+**Lien du plugin :**  
+[https://plugins.qgis.org/plugins/qgis_plugin_gpq_downloader/](https://plugins.qgis.org/plugins/qgis_plugin_gpq_downloader/)
+
+---
+
+## Prérequis GDAL/OGR seul (utilisateurs avancés)
+
+Si vous souhaitez utiliser GDAL/OGR **sans passer par conda**, vous devez installer manuellement GDAL avec le support GeoParquet :
+
+* **GDAL ≥ 3.9** avec le driver `libgdal-arrow-parquet`
+
+!!! warning "Installation manuelle de GDAL"
+    L'installation manuelle de GDAL peut être complexe selon votre système d'exploitation. Nous recommandons d'utiliser l'environnement conda `env_geoparquet` décrit ci-dessus pour une installation simplifiée.
+
+**Ressources pour l'installation manuelle :**
+
+* **Documentation GDAL GeoParquet** : [https://gdal.org/en/stable/tutorials/vector_geoparquet_tut.html](https://gdal.org/en/stable/tutorials/vector_geoparquet_tut.html)
+* **Installation GDAL** : [https://gdal.org/download.html](https://gdal.org/download.html)
+
+**Vérification du driver GeoParquet :**
+
+```bash
+ogrinfo --formats | findstr Parquet
+```
+
+Attendu : Une ligne contenant `Parquet`
+
+---
+
+## Résumé
+
+Vous avez maintenant configuré votre environnement pour accéder aux données GeoParquet :
+
+* **Python/GDAL** : Environnement conda `env_geoparquet` avec GeoPandas, PyArrow et GDAL ≥ 3.9
+* **QGIS** : QGIS ≥ 3.34 LTR avec support natif GeoParquet (et optionnellement le plugin GeoParquet Downloader)
+
+!!! tip "Prochaines étapes"
+    Consultez les tutoriels d'utilisation :
