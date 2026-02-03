@@ -138,7 +138,10 @@ gdf_affine.to_parquet("batiments_stade_olympique.parquet")
 
 ## Accès avec ogr2ogr (GDAL)
 
-GDAL fournit l'outil en ligne de commande `ogr2ogr` pour manipuler les données vectorielles, y compris les fichiers GeoParquet.
+GDAL fournit l'outil en ligne de commande `ogr2ogr` pour manipuler les données vectorielles, y compris les fichiers GeoParquet. Les versions récentes supportent le filtrage à la lecture. 
+
+!!! info "Utilisation ogr2ogr"
+    L'utilisation de ogr2ogr ne permet pas de sauvegarder le résultats d'une sélection spatiale dans une variable, pour ensuite être réutilisée. Les données doivent être écrites sur le disque ou en utilisant des `/vsimem/`. Pour plus d'information (vsimem) : [Documentation GDAL — Virtual File Systems](https://gdal.org/en/stable/user/virtual_file_systems.html)
 
 ### Format d'adresse
 
@@ -147,83 +150,86 @@ Pour accéder aux données distantes avec GDAL, utilisez le préfixe `/vsicurl/`
 ```
 /vsicurl/ftp-maps-canada-ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet
 ```
+### Définir variables environnement
+
+Étant un hébergée sur un répertoire publique, le protocole de connection à AWS ne nécessite pas de compte usager ou de mot de passe. Pour limiter les possibles conflits, il est fortement recomandé de définir ces deux variables environnement avant d'utiliser ogr2ogr:
+
+!!! info "Variables environnement AWS"
+    Une fois votre environnement conda activée, vous devez définir ces deux variables:
+
+    **Windows**
+    ```powershell
+    # Pour Windows PowerShell
+    $env:AWS_NO_SIGN_REQUEST = "YES"
+    $env:AWS_DEFAULT_REGION = "ca-central-1"
+
+    # Pour Windows cmd 
+    set AWS_NO_SIGN_REQUEST = "YES"
+    set AWS_DEFAULT_REGION = "ca-central-1"
+    ```
+    
+    **Linux ou MacOS**
+    ```
+    export AWS_NO_SIGN_REQUEST = "YES"
+    export AWS_DEFAULT_REGION = "ca-central-1"
+    ```
+
+
 
 ### Extraction avec filtrage bbox
 
-La commande suivante extrait les emprises de bâtiments pour une zone géographique spécifique (Montréal) :
+Nous allons reprendre notre exemple pour filtrer les emprises dans le bbox de Montréal.  Nous allons sauvegarder le résultat en local. La commande sera construite avec les paramètres suivants:
+
+- `Chemin de sortie` : Les emprises finales, filtrées par la géométrie de votre zone d'intérêt (pas le bbox)
+- `/vsis3/...` : Chemin du GeoParquet distant sur S3
+- `-spat xmin ymin xmax ymax` : Filtre spatial par votre *bounding box*
+    - Pour l’exemple de Montréal, les valeurs sont : -74.0073 45.3672 -73.4466 45.7328
+- `-nln` : Nom de la couche (layer) dans le fichier de sortie (optionel)
 
 **Windows (PowerShell ou CMD) :**
 
 ```bash
+# Sur windows, les ^ indiquent la prochaine ligne. Sur linux, il faut remplacer pour \. 
 ogr2ogr ^
-  -f GPKG ^
-  
-  -spat -74.0073 45.3672 -73.4466 45.7328
+  Chemin/vers/votre/selection_batiments_ogr2ogr.gpkg ^
+  "/vsicurl/ftp-maps-canada-ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet" ^
+  -spat -74.0073 45.3672 -73.4466 45.7328 ^
+  -nln batiement_opti
 ```
 
-**Linux/macOS :**
+!!! warining "Pour linux et MacOS"
+    Pour les utilisateurs des systèmes d'opération linux ou MacOS, raplacez les `^` pas des `\`. Cela indique les sauts de lignes. 
 
-```bash
-ogr2ogr \
-  -f GPKG \
-  
-  -spat -74.0073 45.3672 -73.4466 45.7328
-```
-
-**Explications des options :**
-
-* `-f GPKG` : Format de sortie (GeoPackage)
-* `batiments_montreal.gpkg` : Nom du fichier de sortie
-* `-spat minx miny maxx maxy` : Filtrage spatial par bbox
-
-!!! tip "Formats de sortie"
-    Vous pouvez changer le format de sortie avec l'option `-f` :
-
-    - `-f Parquet` : GeoParquet
 
 ### Extraction avec filtrage par géométrie (clipsrc)
 
-Pour découper les données avec une géométrie polygonale spécifique, utilisez l'option `-clipsrc` :
+Les options disponibles nous permettent aussi de faire plus d'un traitement dans la même commande. Dans l'exemple qui suit, nous pouvons en une seule commande, filtrer à la lecture les emprises, puis sélectionner uniquement celles qui sont dans une géométrie voulue. Cette géométrie peut être un autre bbox ou encore le chemin vers un fichier polygonal. 
+
+Pour découper les données avec une géométrie polygonale spécifique, utilisez l'option `-clipsrc`. Les paramètrs suivants sont utilisés
+- Chemin de sortie : Les emprises finales, filtrées par la géométrie de votre zone d'intérêt (pas le bbox)
+- `/vsis3/...` : Chemin du GeoParquet distant sur S3
+- `-spat xmin ymin xmax ymax` : Filtre spatial par votre *bounding box*
+    - Pour l’exemple de Montréal, les valeurs sont : -74.0073 45.3672 -73.4466 45.7328
+- `-clipsrc` : Chemin vers le fichier servant à la découpe les géométries selon la limite fournie (ou un bbox).  
+- `-nln` : Nom de la couche (layer) dans le fichier de sortie (optionel)
+
+!!! warning "Utilisation de `-clipsrc`"
+    Pour faciler le tutoriel, nous passons les coordonnées d'un bbox pour couper les emprises de la première sélection. Cependant, le paramètres supportes un chemin vers les fichiers qui contiennet des polygones. 
 
 **Windows :**
-
 ```bash
+# Sur windows, les ^ indiquent la prochaine ligne. Sur linux, il faut remplacer pour \. 
 ogr2ogr ^
-  -f GPKG ^
-  
-  -clipsrc -73.565 45.543 -73.521 45.575
-```
-
-**Linux/macOS :**
-
-```bash
-ogr2ogr \
-  -f GPKG \
-  
-  -clipsrc -73.565 45.543 -73.521 45.575
+  Chemin/vers/votre/selection_batiments_ogr2ogr.gpkg ^
+  "/vsis3/ftp-maps-canada-ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet" ^
+  -spat -74.0073 45.3672 -73.4466 45.7328 ^
+  -clipsrc -73.565 45.543 -73.521 45.575 ^
+  -nln batiement_opti
 ```
 
 !!! warning "Différence entre -spat et -clipsrc"
     * `-spat` : Sélectionne les géométries dont la bbox intersecte la bbox spécifiée (plus rapide)
     * `-clipsrc` : Découpe réellement les géométries à la bbox spécifiée (plus précis mais plus lent)
-
-### Variables d'environnement AWS (si nécessaire)
-
-Par défaut, GDAL accède aux buckets S3 publics sans authentification. Si vous rencontrez des problèmes d'accès, vous pouvez définir les variables d'environnement suivantes :
-
-**Windows (PowerShell) :**
-
-```powershell
-$env:AWS_NO_SIGN_REQUEST="YES"
-```
-
-**Linux/macOS :**
-
-```bash
-export AWS_NO_SIGN_REQUEST="YES"
-```
-
----
 
 ## Utilisation en local
 
@@ -232,31 +238,47 @@ Si vous avez téléchargé le fichier GeoParquet localement, vous pouvez l'utili
 **Python :**
 
 ```python
-gdf = gpd.read_parquet(
-    "chemin/vers/auto_building_opti_2.parquet",
-    bbox=bbox
-)
-```
+import geopandas as gpd
+from shapely.geometry import box
+
+#---|1) Filtrage à la lecture |-------
+# URL du GeoParquet sur S3
+url = "chemin/vers/votre/auto_building_opti_2.parquet"
+
+# Définir la bbox (Montréal)
+bbox_mtl = (-74.0073, 45.3672, -73.4466, 45.7328)
+
+# Lecture avec pré-filtrage bbox
+gpq_subset = gpd.read_parquet(url, bbox=bbox_mtl)
+print(f"Nombre de bâtiments: {len(gpq_subset)}")
+
+#---|2.1) Affinage de la sélection |-------
+# Définir la limite comme un polygone (bbox)
+limite = (-73.565,45.543, -73.521,45.575)
+polygon_limite = box(*limite)
+gdf_limite = gpd.GeoDataFrame(geometry=[polygon_limite], crs=gpq_subset.crs)
+
+# Effectuer la sélection plus précise. 
+gpq_clip = gpd.sjoin(gpq_subset, gdf_limite, predicate="intersects", how="inner")
+
+print(f"Après intersection avec la limite: {len(gpq_clip)} bâtiments")
 
 **ogr2ogr :**
 
 ```bash
-ogr2ogr -f GPKG batiments_montreal.gpkg chemin/vers/auto_building_opti_2.parquet -spat -74.0073 45.3672 -73.4466 45.7328
+
+ogr2ogr ^
+  Chemin/vers/votre/selection_batiments_ogr2ogr.gpkg ^
+  "chemin/vers/votre/auto_building_opti_2.parquet" ^
+  -spat -74.0073 45.3672 -73.4466 45.7328 ^
+  -clipsrc -73.565 45.543 -73.521 45.575 ^
+  -nln batiement_opti
 ```
 
 ---
 
-## Optimisations clés
 
-Le format GeoParquet offre plusieurs avantages pour les performances :
-
-1. **Lecture sélective (colonnes)** : GeoPandas et GDAL peuvent lire uniquement les colonnes nécessaires, réduisant les données transférées
-
-2. **Filtrage spatial push-down** : Le filtrage par bbox est effectué côté serveur, minimisant les données téléchargées
-
-3. **Compression efficace** : Le format Parquet utilise des algorithmes de compression avancés (Snappy, ZSTD) pour réduire la taille des fichiers
-
-!!! tip "Best practices"
+!!! tip "Meilleures pratiques"
     * **Toujours utiliser un filtrage spatial** (`bbox` ou `-spat`) pour les données volumineuses
     * **Utiliser GeoParquet pour les sorties** si vous comptez réutiliser les données (performances optimales)
 
