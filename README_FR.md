@@ -8,7 +8,7 @@ Le dépôt CanElevation fournit une documentation complète, des exemples et des
 
 ## Aperçu
 
-Ce dépôt contient :
+Ce dépôt contient  :
 
 - **Notebooks Jupyter interactifs** - Tutoriels étape par étape pour le traitement des données d'élévation
 - **Documentation** - Guides complets en français et en anglais
@@ -72,4 +72,5 @@ Ce projet est sous licence de la [License du gouvernement ouvert – Canada](htt
 
 Pour des questions ou du support :
 - 📖 Consultez la [documentation](https://nrcan.github.io/CanElevation/)
+
 - 🐛 Signalez les problèmes sur [GitHub Issues](https://github.com/NRCan/CanElevation/issues)
