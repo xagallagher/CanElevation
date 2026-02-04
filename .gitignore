@@ -3,5 +3,4 @@ vertical_transformations/sample_data/pointcloud/output_*.laz
 vertical_transformations/sample_data/pointcloud/output_*.copc.laz
 *.json
 site
-.github/
 *.tif

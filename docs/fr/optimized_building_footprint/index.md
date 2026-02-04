@@ -1,0 +1,70 @@
+# Couche optimisée des bâtiments - GeoParquet - Série CanElevation
+
+La couche optimisée des bâtiments est un jeu de données vectoriel qui recense les meilleures emprises de bâtiments à l'échelle du Canada. Grâce à un processus de priorisation des emprises, seules les meilleures sont conservées. Cette couche, qui contient plus de 10 millions d'emprises de bâtiments, est offerte au format **GeoParquet**, optimisé pour l'infonuagique. Ce tutoriel présente l'utilisation du format GeoParquet pour accéder à ces données de manière efficace et performante.
+
+## Qu'est-ce que GeoParquet?
+
+**GeoParquet** est un format de fichier géospatial basé sur [Apache Parquet](https://parquet.apache.org/), conçu pour stocker et traiter efficacement des données vectorielles volumineuses. Il combine les avantages suivants :
+
+* **Compression optimale** : Réduction significative de la taille des fichiers
+* **Lecture sélective** : Possibilité de lire uniquement les colonnes ou les zones géographiques nécessaires
+* **Performance** : Accès rapide aux données, même pour de très grands jeux de données
+* **Interopérabilité** : Compatible avec les outils modernes (Python, GDAL, QGIS, DuckDB, etc.)
+* **Stockage en colonnes** : Optimisé pour les requêtes analytiques
+
+## Pourquoi GeoParquet?
+
+Le format GeoParquet offre des avantages par rapport aux formats traditionnels comme le GeoPackage (GPKG). Voici une comparaison pour la couche optimisée des bâtiments :
+
+| **Critère** | **GeoParquet** | **GeoPackage** |
+|-------------|----------------|----------------|
+| **Taille du fichier** | ~2.3 Go | ~5.6 Go |
+| **Compression** | Excellente (60% de réduction) | Modérée |
+| **Lecture sélective (bbox)** | Oui (filtrage côté serveur) | Non (téléchargement complet requis) |
+| **Performance de lecture** | Très rapide (colonnes ciblées) | Modérée |
+| **Accès distant (S3/HTTP)** | Optimisé (lecture partielle) | Peu efficace |
+| **Interopérabilité** | Python, GDAL, QGIS, DuckDB, etc. | Universel (mais moins performant) |
+
+
+GeoParquet organise les données en « row groups », qui sont des blocs de lignes permettant une lecture efficace et sélective. Dans les fichiers GeoParquet optimisés, la boîte englobante (bbox) de chaque row group peut être stockée dans les métadonnées du fichier, ce qui facilite le filtrage spatial. Ainsi, lors d'une lecture avec un filtre spatial, la bbox de chaque row group est comparée à la zone de requête ; seuls les row groups dont la bbox intersecte la zone demandée sont lus, ce qui réduit le volume de données à traiter. Le nombre d’entités par row group (par exemple 65 536) est paramétrable lors de la création du fichier et peut varier selon les besoins d’optimisation.
+
+---
+
+## Données disponibles
+
+La couche optimisée des bâtiments en format GeoParquet est accessible via :
+
+* **URL FTP** : [https://download-telecharger.services.geo.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet](https://download-telecharger.services.geo.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet)
+
+**Caractéristiques du jeu de données :**
+
+* **Nombre d'emprises** : 10+ millions de bâtiments
+* **Taille du fichier** : ~2.3 Go (format GeoParquet)
+* **Couverture géographique** : Canada
+* **Système de coordonnées** : EPSG:4617 (NAD83 CSRS géographique)
+
+
+## Résumé des tutoriels
+
+Ce guide est divisé en trois tutoriels pour vous accompagner dans l'utilisation de la couche optimisée des bâtiments en format GeoParquet :
+
+1. **[Configuration de l'environnement](environment-setup.md)** : Installation des prérequis (conda, Python, GDAL, QGIS) pour accéder aux données GeoParquet
+
+2. **[Utilisation avec Python et GDAL](acces-python-gdal.md)** : Accès et manipulation des données avec Python (GeoPandas) et la ligne de commande (ogr2ogr)
+
+3. **[Utilisation avec QGIS](acces-qgis.md)** : Chargement et visualisation des données avec QGIS et le plugin GeoParquet Downloader
+
+!!! info "Tutoriels indépendants"
+    Vous pouvez suivre les tutoriels dans l'ordre qui correspond à vos besoins. Si vous souhaitez utiliser uniquement QGIS, vous pouvez directement consulter les sections [Configuration de l'environnement](environment-setup.md#prerequis-qgis) et [Utilisation avec QGIS](acces-qgis.md).
+
+## Public cible
+
+Ces tutoriels s'adressent à :
+
+* **Analystes SIG** souhaitant manipuler des données vectorielles volumineuses dans QGIS
+* **Développeurs Python** utilisant GeoPandas et PyArrow pour des analyses géospatiales
+* **Utilisateurs GDAL** automatisant le traitement de données avec ogr2ogr
+* **Data scientists** exploitant des formats optimisés pour le cloud (S3, HTTP)
+
+!!! note "Prérequis"
+    Une connaissance de base en SIG et en ligne de commande est recommandée pour suivre les tutoriels Python/GDAL. Le tutoriel QGIS est accessible aux utilisateurs débutants.
