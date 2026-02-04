@@ -40,7 +40,7 @@ conda env create -f environment_geoparquet.yaml -n env_geoparquet
 
 Cette commande va :
 * Installer Python 3.12
-* Installer les bibliothèques nécessaires : `geopandas`, `pyarrow`, `shapely`, `pandas`, `numpy`
+* Installer les bibliothèques nécessaires : `geopandas`, `pyarrow`, `shapely`, `pandas`, `numpy`, `libgdal-arrow-parquet`
 * Installer GDAL ≥ 3.10 avec support GeoParquet
 
 !!! tip "Temps d'installation"
@@ -79,7 +79,7 @@ python -c "import geopandas; import pyarrow; print('OK - Tous les modules sont c
 Attendu : `OK - Tous les modules sont correctement installés`
 
 !!! warning "Résolution de problèmes"
-    En cas de problème persistant, supprimez l'environnement avec `conda env remove -n env_geoparquet` et recommencez la création.
+    En cas de problèmes persistants, supprimez l'environnement avec `conda env remove -n env_geoparquet` et recommencez la création.
     Vous pouvez également consulter la documentation de GDAL détaillant la création d'un environnement supportant le GeoParquet [https://gdal.org/en/stable/tutorials/vector_geoparquet_tut.html](https://gdal.org/en/stable/tutorials/vector_geoparquet_tut.html)
 ---
 
