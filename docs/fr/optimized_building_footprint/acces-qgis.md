@@ -28,7 +28,10 @@ https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_buildin
 
 
 1. **Ouvrir le Gestionnaire de sources de données**  
-   Allez dans `Layer` → `Add Layer` → `Add Vector Layer` .
+   Allez dans `Layer` → `Add Layer` → `Add Vector Layer`.
+
+![Vector Data manager](../../assets/images/geoparquet_DataSourceManagement.png)
+*Figure : Ouverture de l'interface du Gestionnaire de sources vectorielles de QGIS.*
 
 2. **Type de source**  
    Assurez-vous que le type de source est défini sur `Protocol: HTTP(S), cloud, etc.`.
