@@ -1,7 +1,7 @@
 site_name: CanElevation Documentation
 site_description: Comprehensive guides and examples for working with Canadian elevation data
-site_url: https://nrcan.github.io/CanElevation/
-repo_url: https://github.com/NRCan/CanElevation
+site_url: https://xagallagher.github.io/CanElevation/
+repo_url: https://github.com/xagallagher/CanElevation
 repo_name: NRCan/CanElevation
 
 theme:
@@ -106,3 +106,4 @@ extra:
       link: ./fr/
 
       lang: fr
+
