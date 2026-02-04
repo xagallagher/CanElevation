@@ -34,6 +34,12 @@ Ce dépôt contient :
 - Transformations basées sur des rasters
 - Conversions de datums et d'époque pour nuages de points
 
+### Utilisation du GeoParquet de la couche optimisée des bâtiments
+
+- Apprenez à utiliser le GeoParquet de la couche optimisée des bâtiments à l'aide de Python et GDAL.
+- Visualisez la couche à l'aide de QGIS. 
+  
+
 ## 📖 Documentation
 
 **Visitez notre documentation complète :** [https://nrcan.github.io/CanElevation/](https://nrcan.github.io/CanElevation/)
