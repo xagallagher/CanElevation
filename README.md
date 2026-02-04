@@ -32,6 +32,11 @@ This repository contains:
 - Raster-based transformations
 - Point cloud datum and epoch conversions
 
+### Using the GeoParquet Optimized Building Layer
+
+- Learn how to use the GeoParquet optimized building layer with Python and GDAL.
+- Visualize the layer using QGIS.
+
 ## 📖 Documentation
 
 **Visit our comprehensive documentation:** [https://nrcan.github.io/CanElevation/](https://nrcan.github.io/CanElevation/)

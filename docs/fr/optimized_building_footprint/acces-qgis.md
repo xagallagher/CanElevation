@@ -14,7 +14,7 @@ Ce tutoriel présente l'accès et la visualisation de la couche optimisée des b
 
 ## Chargement direct du GeoParquet
 
-QGIS 3.34 et les versions ultérieures prennent en charge le format GeoParquet nativement. Vous pouvez charger directement un fichier GeoParquet local ou distant. Dans l'exemple qui suit, le GeoParquet hébergé sur S3 sera utilisé.
+QGIS 3.40 et les versions ultérieures prennent en charge le format GeoParquet nativement. Vous pouvez charger directement un fichier GeoParquet local ou distant. Dans l'exemple qui suit, le GeoParquet hébergé sur S3 sera utilisé.
 
 https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet
 
@@ -64,11 +64,11 @@ Si vous avez téléchargé le fichier GeoParquet complet sur votre ordinateur, v
 
 ### Problème : "GeoParquet format not supported"
 
-**Cause :** Votre version de QGIS est antérieure à 3.34 ou GDAL n'a pas le support GeoParquet activé.
+**Cause :** Votre version de QGIS est antérieure à 3.40 ou GDAL n'a pas le support GeoParquet activé.
 
 **Solution :**
 
-1. Vérifiez votre version de QGIS : `Aide` → `À propos` (doit être ≥ 3.34)
+1. Vérifiez votre version de QGIS : `Aide` → `À propos` (doit être ≥ 3.40)
 2. Si la version est inférieure, mettez à jour QGIS vers la dernière LTR : [https://qgis.org/download/](https://qgis.org/download/)
 
 ### Problème : QGIS se fige lors du chargement du fichier complet
@@ -76,18 +76,8 @@ Si vous avez téléchargé le fichier GeoParquet complet sur votre ordinateur, v
 **Cause :** Le fichier GeoParquet complet contient plus de 10 millions d'emprises, ce qui peut ralentir QGIS si toutes les données sont chargées.
 
 **Solution :**
-
-* Utilisez le plugin GeoParquet Downloader pour télécharger uniquement la zone d'intérêt
 * Utilisez Python/GDAL pour pré-filtrer les données avant de les charger dans QGIS (voir [Utilisation avec Python et GDAL](acces-python-gdal.md))
 
 ---
 
-## Résumé
 
-Ce tutoriel a présenté deux approches pour accéder à la couche optimisée des bâtiments au format GeoParquet dans QGIS :
-
-* **Chargement direct** : Pour les fichiers GeoParquet locaux (≥ QGIS 3.34)
-* **Plugin GeoParquet Downloader** : Pour télécharger automatiquement une zone d'intérêt basée sur l'emprise du canevas
-
-!!! tip "Méthode recommandée"
-    Pour les utilisateurs de QGIS, le **plugin GeoParquet Downloader** est l'approche la plus simple et la plus efficace pour extraire rapidement une zone d'intérêt sans manipuler le fichier complet.
