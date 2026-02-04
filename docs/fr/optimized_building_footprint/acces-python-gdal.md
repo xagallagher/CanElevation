@@ -206,6 +206,7 @@ ogr2ogr ^
 Les options disponibles nous permettent aussi de faire plus d'un traitement dans la même commande. Dans l'exemple qui suit, nous pouvons en une seule commande, filtrer à la lecture les emprises, puis sélectionner uniquement celles qui sont dans une géométrie voulue. Cette géométrie peut être un autre bbox ou encore le chemin vers un fichier polygonal. 
 
 Pour découper les données avec une géométrie polygonale spécifique, utilisez l'option `-clipsrc`. Les paramètrs suivants sont utilisés
+
 - Chemin de sortie : Les emprises finales, filtrées par la géométrie de votre zone d'intérêt (pas le bbox)
 - `/vsis3/...` : Chemin du GeoParquet distant sur S3
 - `-spat xmin ymin xmax ymax` : Filtre spatial par votre *bounding box*
@@ -263,6 +264,8 @@ gpq_clip = gpd.sjoin(gpq_subset, gdf_limite, predicate="intersects", how="inner"
 
 print(f"Après intersection avec la limite: {len(gpq_clip)} bâtiments")
 
+```
+
 **ogr2ogr :**
 
 ```bash
@@ -274,6 +277,7 @@ ogr2ogr ^
   -clipsrc -73.565 45.543 -73.521 45.575 ^
   -nln batiement_opti
 ```
+
 
 ---
 

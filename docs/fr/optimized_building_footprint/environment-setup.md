@@ -41,7 +41,7 @@ conda env create -f environment_geoparquet.yaml -n env_geoparquet
 Cette commande va :
 * Installer Python 3.12
 * Installer les bibliothèques nécessaires : `geopandas`, `pyarrow`, `shapely`, `pandas`, `numpy`
-* Installer GDAL ≥ 3.9 avec support GeoParquet
+* Installer GDAL ≥ 3.10 avec support GeoParquet
 
 !!! tip "Temps d'installation"
     L'installation peut prendre quelques minutes selon votre connexion internet. Conda télécharge et installe automatiquement toutes les dépendances requises.
@@ -79,12 +79,8 @@ python -c "import geopandas; import pyarrow; print('OK - Tous les modules sont c
 Attendu : `OK - Tous les modules sont correctement installés`
 
 !!! warning "Résolution de problèmes"
-    Si une des commandes ci-dessus échoue, vérifiez que :
-
-    - Le fichier `environment_geoparquet.yaml` est complet et non corrompu
-
     En cas de problème persistant, supprimez l'environnement avec `conda env remove -n env_geoparquet` et recommencez la création.
-    Vous pouvez également consulter la documentation de GDAL détaillant la création d'un environnement [https://gdal.org/en/stable/tutorials/vector_geoparquet_tut.html](https://gdal.org/en/stable/tutorials/vector_geoparquet_tut.html)
+    Vous pouvez également consulter la documentation de GDAL détaillant la création d'un environnement supportant le GeoParquet [https://gdal.org/en/stable/tutorials/vector_geoparquet_tut.html](https://gdal.org/en/stable/tutorials/vector_geoparquet_tut.html)
 ---
 
 <a id="prerequis-qgis"></a>
@@ -94,9 +90,9 @@ Cette section est destinée aux utilisateurs qui souhaitent visualiser et manipu
 
 ### Installation de QGIS
 
-Pour accéder aux données GeoParquet dans QGIS, vous devez disposer de :
+Pour accéder aux données GeoParquet dans QGIS, nous suggérons d'utiliser la version suivante :
 
-* **QGIS ≥ 3.34 LTR** (Long Term Release) : version minimale avec support natif du format GeoParquet
+* **QGIS 3.40 LTR** (Long Term Release) : La version stable avec les dépendances nécessaires. 
 
 !!! info "Téléchargement de QGIS"
     Téléchargez et installez QGIS depuis le site officiel : [https://qgis.org/download/](https://qgis.org/download/)
@@ -105,15 +101,17 @@ Pour accéder aux données GeoParquet dans QGIS, vous devez disposer de :
 
 1. Ouvrez QGIS
 2. Allez dans le menu `Aide` → `À propos`
-3. Vérifiez que la version affichée est ≥ 3.34
+3. Vérifiez que la version affichée est ≥ 3.40
 
 
 ## Résumé
 
 Vous avez maintenant configuré votre environnement pour accéder aux données GeoParquet :
 
-* **Python/GDAL** : Environnement conda `env_geoparquet` avec GeoPandas, PyArrow et GDAL ≥ 3.9
-* **QGIS** : QGIS ≥ 3.34 LTR avec support natif GeoParquet (et optionnellement le plugin GeoParquet Downloader)
+* **Python/GDAL** : Environnement conda `env_geoparquet` avec GeoPandas, PyArrow et GDAL ≥ 3.10
+* **QGIS** : QGIS ≥ 3.40 LTR avec support natif GeoParquet 
 
 !!! tip "Prochaines étapes"
     Consultez les tutoriels d'utilisation :
+    [Utilisation avec Python ou GDAL](acces-python-gdal.md)
+    [Utilisation avec QGIS](acces-qgis.md)

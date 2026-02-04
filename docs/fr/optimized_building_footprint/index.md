@@ -1,6 +1,6 @@
 # Couche optimisée des bâtiments - GeoParquet - Série CanElevation
 
-La couche optimisée des bâtiments est un jeu de données vectoriel qui recense les meilleures emprises de bâtiments à l'échelle du Canada. Grace à un processus de priorisation des emprises, seulement les meilleures sont conservées. Cette couche de plus de 10 millions d'emprises de bâtiment est offerte en format **GeoParquet**, optimisé pour l'infonuagique. Ce tutoriel présente l'utilisation du format **GeoParquet** pour accéder à ces données de manière efficace et performante.
+La couche optimisée des bâtiments est un jeu de données vectoriel qui recense les meilleures emprises de bâtiments à l'échelle du Canada. Grâce à un processus de priorisation des emprises, seules les meilleures sont conservées. Cette couche, qui contient plus de 10 millions d'emprises de bâtiments, est offerte au format **GeoParquet**, optimisé pour l'infonuagique. Ce tutoriel présente l'utilisation du format GeoParquet pour accéder à ces données de manière efficace et performante.
 
 ## Qu'est-ce que GeoParquet?
 
@@ -25,10 +25,11 @@ Le format GeoParquet offre des avantages par rapport aux formats traditionnels c
 | **Accès distant (S3/HTTP)** | Optimisé (lecture partielle) | Peu efficace |
 | **Interopérabilité** | Python, GDAL, QGIS, DuckDB, etc. | Universel (mais moins performant) |
 
-!!! tip "Avantages pour les utilisateurs"
-    Le format GeoParquet permet de télécharger **uniquement la zone géographique d'intérêt** sans avoir à télécharger les ~5.6 Go du fichier GeoPackage complet. Cela réduit considérablement les temps de téléchargement.
 
-GeoParquet organise les données en « row groups », qui sont des blocs de lignes permettant une lecture efficace et sélective. Dans les fichiers GeoParquet optimisés, la boîte englobante (bbox) de chaque row group peut être stockée dans les métadonnées du fichier, ce qui facilite le filtrage spatial. Ainsi, lors d'une lecture avec filtre spatial, le bbox de chaque row group est comparé à la zone de requête ; seuls les row groups dont la bbox intersecte la zone demandée sont lus, réduisant le volume de données à traiter. Le nombre d’entités par row group, comme 65 536, est paramétrable lors de la création du fichier et peut varier selon les besoins d’optimisation.
+GeoParquet organise les données en « row groups », qui sont des blocs de lignes permettant une lecture efficace et sélective. Dans les fichiers GeoParquet optimisés, la boîte englobante (bbox) de chaque row group peut être stockée dans les métadonnées du fichier, ce qui facilite le filtrage spatial. Ainsi, lors d'une lecture avec un filtre spatial, la bbox de chaque row group est comparée à la zone de requête ; seuls les row groups dont la bbox intersecte la zone demandée sont lus, ce qui réduit le volume de données à traiter. Le nombre d’entités par row group (par exemple 65 536) est paramétrable lors de la création du fichier et peut varier selon les besoins d’optimisation.
+
+---
+
 ## Données disponibles
 
 La couche optimisée des bâtiments en format GeoParquet est accessible via :
