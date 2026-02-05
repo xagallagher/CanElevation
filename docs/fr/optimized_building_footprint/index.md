@@ -34,7 +34,7 @@ GeoParquet organise les données en « row groups », qui sont des blocs de lign
 
 La couche optimisée des bâtiments en format GeoParquet est accessible via :
 
-* **URL FTP** : [https://download-telecharger.services.geo.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet](https://download-telecharger.services.geo.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet)
+* **URL FTP** : [https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet](https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet)
 
 **Caractéristiques du jeu de données :**
 
@@ -46,16 +46,13 @@ La couche optimisée des bâtiments en format GeoParquet est accessible via :
 
 ## Résumé des tutoriels
 
-Ce guide est divisé en trois tutoriels pour vous accompagner dans l'utilisation de la couche optimisée des bâtiments en format GeoParquet :
+Ce guide est divisé en 2 tutoriels pour vous accompagner dans l'installation des dépendances et l'utilisation de la couche optimisée des bâtiments en format GeoParquet :
 
-1. **[Configuration de l'environnement](environment-setup.md)** : Installation des prérequis (conda, Python, GDAL, QGIS) pour accéder aux données GeoParquet
+1. **[Utilisation avec Python et GDAL](acces-python-gdal.md)** : Accès et manipulation des données avec Python (GeoPandas) et la ligne de commande (ogr2ogr)
 
-2. **[Utilisation avec Python et GDAL](acces-python-gdal.md)** : Accès et manipulation des données avec Python (GeoPandas) et la ligne de commande (ogr2ogr)
+2. **[Utilisation avec QGIS](acces-qgis.md)** : Chargement et visualisation des données avec QGIS et le plugin GeoParquet Downloader
 
-3. **[Utilisation avec QGIS](acces-qgis.md)** : Chargement et visualisation des données avec QGIS et le plugin GeoParquet Downloader
 
-!!! info "Tutoriels indépendants"
-    Vous pouvez suivre les tutoriels dans l'ordre qui correspond à vos besoins. Si vous souhaitez utiliser uniquement QGIS, vous pouvez directement consulter les sections [Configuration de l'environnement](environment-setup.md#prerequis-qgis) et [Utilisation avec QGIS](acces-qgis.md).
 
 ## Public cible
 
