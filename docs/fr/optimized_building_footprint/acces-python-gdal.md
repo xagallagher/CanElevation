@@ -25,7 +25,7 @@ Si la commande retourne un numéro de version (ex: `conda 24.1.2`), conda est co
 Le fichier d'environnement `environment_geoparquet.yaml` contient toutes les dépendances nécessaires pour manipuler les données GeoParquet avec Python et GDAL.
 
 !!! info "Téléchargement du fichier d'environnement"
-    <a class="md-button md-button--primary" href="../../assets/env/environment_geoparquet.yaml" download>📄 Télécharger environment_geoparquet.yaml</a>
+    <a class="md-button md-button--primary" href="../../../assets/env/environment_geoparquet.yaml" download>📄 Télécharger environment_geoparquet.yaml</a>
 
 
 Enregistrez ce fichier dans un répertoire de travail sur votre ordinateur.
