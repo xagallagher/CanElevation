@@ -7,24 +7,35 @@ Ce tutoriel présente l'accès et la visualisation de la couche optimisée des b
 
     Si votre utilisation est principalement la visualisation, nous recommandons fortement de télécharger le GeoParquet ou de faire une présélection de votre zone d'intérêt. Les performances seront nettement supérieures (voir [Utilisation avec Python et GDAL](acces-python-gdal.md)).
 
-!!! info "Prérequis"
-    Assurez-vous d'avoir installé QGIS ≥ 3.40 LTR en suivant le tutoriel [Configuration de l'environnement](environment-setup.md#prerequis-qgis).
+## Installation de QGIS
 
----
+Pour accéder aux données GeoParquet dans QGIS, nous suggérons d'utiliser la version suivante :
+
+* **QGIS 3.40 LTR** (Long Term Release) : La version stable avec les dépendances nécessaires. 
+
+!!! info "Téléchargement de QGIS"
+    Téléchargez et installez QGIS depuis le site officiel : [https://qgis.org/download/](https://qgis.org/download/)
+
+**Vérification de la version :**
+
+1. Ouvrez QGIS
+2. Allez dans le menu `Aide` → `À propos`
+3. Vérifiez que la version affichée est ≥ 3.40
 
 ## Chargement direct du GeoParquet
 
-QGIS 3.40 et les versions ultérieures prennent en charge le format GeoParquet nativement. Vous pouvez charger directement un fichier GeoParquet local ou distant. Dans l'exemple qui suit, le GeoParquet hébergé sur S3 sera utilisé.
+QGIS 3.40 et les versions ultérieures prennent en charge le format GeoParquet nativement. Vous pouvez charger directement un fichier GeoParquet local ou distant. Dans l'exemple qui suit, le GeoParquet hébergé sur le ftp sera utilisé.
 
+```
 https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet
+```
 
 ### Étapes pour le chargement
 
 
 !!! info "Bonnes pratiques"
-    Pour faciliter la visualisation en *streaming* nous recommandons fortement de placer votre canevas sur la région voulue avec un échelle de zoom < à 1:50 000. Sinon, la visualisation peut prendre beaucoup de temps. 
-    
-    Pour une visualisation réactive et fluide, nous recommandons de télécharger le fichier GeoParquet.
+    Pour faciliter la visualisation en *streaming* nous recommandons fortement de placer votre canevas sur la région voulue avec un échelle de zoom < à 1:50 000. Sinon, la visualisation peut prendre beaucoup de temps.     
+    **Pour une visualisation réactive et fluide, nous recommandons de télécharger le fichier GeoParquet**.
 
 
 1. **Ouvrir le Gestionnaire de sources de données**  
@@ -56,7 +67,7 @@ https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_buildin
 Si vous avez téléchargé le fichier GeoParquet complet sur votre ordinateur, vous pouvez l'ouvrir directement dans QGIS :
 
 1. **Télécharger le fichier** :  
-   [https://download-telecharger.services.geo.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet](https://download-telecharger.services.geo.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet)
+   [https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet](https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet)
 
 2. **Ouvrir dans QGIS** :  
    Suivez les étapes de la section [Chargement direct du GeoParquet](#chargement-direct-du-geoparquet) ci-dessus.

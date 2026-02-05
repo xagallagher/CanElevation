@@ -93,7 +93,6 @@ nav:
     - Point Cloud Transformations: vertical-transformations/pointcloud-transformations.md
   - Couche optimisée des bâtiments:
     - Aperçu: optimized_building_footprint/index.md
-    - Configuration de l'environnement: fr/optimized_building_footprint/environment-setup.md
     - Utilisation avec Python et GDAL: optimized_building_footprint/acces-python-gdal.md
     - Utilisation avec QGIS: optimized_building_footprint/acces-qgis.md
 
