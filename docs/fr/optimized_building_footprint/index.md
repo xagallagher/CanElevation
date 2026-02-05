@@ -46,7 +46,7 @@ La couche optimisée des bâtiments en format GeoParquet est accessible via :
 
 ## Résumé des tutoriels
 
-Ce guide est divisé en 2 tutoriels pour vous accompagner dans l'installation des dépendences et l'utilisation de la couche optimisée des bâtiments en format GeoParquet :
+Ce guide est divisé en 2 tutoriels pour vous accompagner dans l'installation des dépendances et l'utilisation de la couche optimisée des bâtiments en format GeoParquet :
 
 1. **[Utilisation avec Python et GDAL](acces-python-gdal.md)** : Accès et manipulation des données avec Python (GeoPandas) et la ligne de commande (ogr2ogr)
 
