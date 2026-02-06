@@ -2,6 +2,13 @@
 
 Ce tutoriel présente l'accès et la manipulation de la couche optimisée des bâtiments en format GeoParquet avec **Python (GeoPandas)** et **GDAL (ogr2ogr)**. Ces outils permettent de filtrer, transformer et exporter les données de manière efficace.
 
+!!! warning "Pour Linux et macOS"
+    Ce tutoriel utilise des exemples conçus pour Windows. Les commandes multi‑lignes montrent le caractère de continuation utilisé selon le shell :
+    - Windows Invite de commandes (CMD) : ^
+    - Windows PowerShell : ` (accent grave)
+  
+    Sous Linux/macOS (bash, zsh), remplacez ces caractères par \ pour indiquer la continuation de ligne. Vérifiez toujours quel shell vous utilisez avant d'adapter la syntaxe.
+
 ## Configuration de l'environnement conda
 Les prochaines étapes visent à vous guider dans la configuration de l'environnement nécessaire accéder et manipuler les données GeoParquet de la couche optimisée des bâtiments. 
 
@@ -231,7 +238,7 @@ gpq_clip.to_parquet("batiments_stade_olympique.parquet")
 GDAL fournit l'outil en ligne de commande `ogr2ogr` pour manipuler les données vectorielles, y compris les fichiers GeoParquet. Les versions récentes supportent le filtrage à la lecture. 
 
 !!! info "Utilisation ogr2ogr"
-    L'utilisation de ogr2ogr ne permet pas de sauvegarder le résultats d'une sélection spatiale dans une variable, pour ensuite être réutilisée. Les données doivent être écrites sur le disque ou en utilisant des `/vsimem/`. Pour plus d'information (vsimem) : [Documentation GDAL — Virtual File Systems](https://gdal.org/en/stable/user/virtual_file_systems.html)
+    L'utilisation de ogr2ogr ne permet pas de sauvegarder le résultats d'une sélection spatiale dans une variable, pour ensuite être réutilisée. Les données doivent être écrites sur le disque.
 
 ### Format d'adresse
 
@@ -258,10 +265,8 @@ Nous allons reprendre notre exemple pour filtrer les emprises dans le bbox de Mo
     - Pour l’exemple de Montréal, les valeurs sont : -74.0073 45.3672 -73.4466 45.7328
 - `-nln` : Nom de la couche (layer) dans le fichier de sortie (optionel)
 
-**Windows (PowerShell ou CMD) :**
 
 ```bash
-# Sur windows, les ^ indiquent la prochaine ligne. Sur linux, il faut remplacer pour \. 
 ogr2ogr ^
   Chemin/vers/votre/selection_batiments_ogr2ogr.gpkg ^
   "/vsicurl/https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet" ^
@@ -269,7 +274,7 @@ ogr2ogr ^
   -nln batiement_opti
 ```
 
-!!! warining "Pour linux et MacOS"
+!!! warning "Pour linux et MacOS"
     Pour les utilisateurs des systèmes d'opération linux ou MacOS, raplacez les `^` par des `\`. Cela indique les sauts de lignes. 
 
 
@@ -289,9 +294,8 @@ Pour découper les données avec une géométrie polygonale spécifique, utilise
 !!! warning "Utilisation de `-clipsrc`"
     Pour faciler le tutoriel, nous passons les coordonnées d'un bbox pour couper les emprises de la première sélection. Il s'agit du bbox entourant le Stade Olympique de Montréal. 
 
-**Windows :**
 ```bash
-# Sur windows, les ^ indiquent la prochaine ligne. Sur linux, il faut remplacer pour \. 
+
 ogr2ogr ^
   Chemin/vers/votre/selection_batiments_ogr2ogr.gpkg ^
   "/vsicurl/https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_building_opti_2/auto_building_opti_2.parquet" ^

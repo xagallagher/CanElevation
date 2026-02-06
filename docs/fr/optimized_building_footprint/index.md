@@ -26,7 +26,7 @@ Le format GeoParquet offre des avantages par rapport aux formats traditionnels c
 | **Interopérabilité** | Python, GDAL, QGIS, DuckDB, etc. | Universel (mais moins performant) |
 
 
-GeoParquet organise les données en « row groups », qui sont des blocs de lignes permettant une lecture efficace et sélective. Dans les fichiers GeoParquet optimisés, la boîte englobante (bbox) de chaque row group peut être stockée dans les métadonnées du fichier, ce qui facilite le filtrage spatial. Ainsi, lors d'une lecture avec un filtre spatial, la bbox de chaque row group est comparée à la zone de requête ; seuls les row groups dont la bbox intersecte la zone demandée sont lus, ce qui réduit le volume de données à traiter. Le nombre d’entités par row group (par exemple 65 536) est paramétrable lors de la création du fichier et peut varier selon les besoins d’optimisation.
+GeoParquet organise les données en groupe d'entités, qui sont des blocs de lignes permettant une lecture efficace et sélective. Dans les fichiers GeoParquet optimisés, la boîte englobante (bbox) de chaque groupe d'entité peut être stockée dans les métadonnées du fichier, ce qui facilite le filtrage spatial. Ainsi, lors d'une lecture avec un filtre spatial, la bbox de chaque groupe d'entité est comparée à la zone de requête ; seuls les groupe d'entité dont la bbox intersecte la zone demandée sont lus, ce qui réduit le volume de données à traiter. Le nombre d’entités par groupe d'entité (par exemple 65 536) est paramétrable lors de la création du fichier et peut varier selon les besoins d’optimisation.
 
 ---
 
@@ -61,7 +61,10 @@ Ces tutoriels s'adressent à :
 * **Analystes SIG** souhaitant manipuler des données vectorielles volumineuses dans QGIS
 * **Développeurs Python** utilisant GeoPandas et PyArrow pour des analyses géospatiales
 * **Utilisateurs GDAL** automatisant le traitement de données avec ogr2ogr
-* **Data scientists** exploitant des formats optimisés pour le cloud (S3, HTTP)
+* **expert en science des données** exploitant des formats optimisés pour le cloud (S3, HTTP)
 
 !!! note "Prérequis"
     Une connaissance de base en SIG et en ligne de commande est recommandée pour suivre les tutoriels Python/GDAL. Le tutoriel QGIS est accessible aux utilisateurs débutants.
+
+## Pour en savoir plus
+Pour de plus amples informations sur la couche optimisée des bâtiments, vous êtes les bienvenus à consulter la page du produit [Bâtiments extraits automatiquement](https://ouvert.canada.ca/data/fr/dataset/7a5cda52-c7df-427f-9ced-26f19a8a64d6). Vous y trouverez la spécification du produit, l'index des projets ainsi que les répertoires de téléchargements par projet (geopackage et shapefile). 
