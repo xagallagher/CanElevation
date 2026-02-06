@@ -37,7 +37,11 @@ Ce dépôt contient  :
 ### Utilisation du GeoParquet de la couche optimisée des bâtiments
 
 - Apprenez à utiliser le GeoParquet de la couche optimisée des bâtiments à l'aide de Python et GDAL.
-- Visualisez la couche à l'aide de QGIS. 
+- Visualisez la couche à l'aide de QGIS.
+
+*English version:*
+   - [Python & GDAL Access](docs/en/optimized_building_footprint/python-gdal-access.md)
+   - [QGIS Access](docs/en/optimized_building_footprint/qgis-access.md)
   
 
 ## 📖 Documentation

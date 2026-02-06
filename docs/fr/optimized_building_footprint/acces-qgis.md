@@ -1,6 +1,6 @@
 # Utilisation avec QGIS
 
-Ce tutoriel présente l'accès et la visualisation de la couche optimisée des bâtiments au format GeoParquet avec **QGIS**. La version LTR de QGIS prend en charge nativement la lecture des fichiers GeoParquet.
+Ce tutoriel présente l'accès et la visualisation de la couche optimisée des bâtiments au format GeoParquet avec **QGIS**. QGIS prend en charge nativement la lecture des fichiers GeoParquet.
 
 !!! warning "Visionnement en continu"
     Bien que le GeoParquet permette la lecture en continu (*streaming*), il n'est pas le format le plus optimisé pour la seule visualisation. Cependant, il représente le meilleur compromis, car la donnée lue en continu contient les informations vectorielles et attributaires.
@@ -16,12 +16,6 @@ Pour accéder aux données GeoParquet dans QGIS, nous suggérons d'utiliser la v
 !!! info "Téléchargement de QGIS"
     Téléchargez et installez QGIS depuis le site officiel : [https://qgis.org/download/](https://qgis.org/download/)
 
-**Vérification de la version :**
-
-1. Ouvrez QGIS
-2. Allez dans le menu `Aide` → `À propos`
-3. Vérifiez que la version affichée est ≥ 3.40
-
 ## Chargement direct du GeoParquet
 
 QGIS 3.40 et les versions ultérieures prennent en charge le format GeoParquet nativement. Vous pouvez charger directement un fichier GeoParquet local ou distant. Dans l'exemple qui suit, le GeoParquet hébergé sur le ftp sera utilisé.
@@ -34,9 +28,9 @@ https://ftp.maps.canada.ca/pub/nrcan_rncan/extraction/auto_building/auto_buildin
 
 
 !!! info "Bonnes pratiques"
-    Pour faciliter la visualisation en *streaming* nous recommandons fortement de placer votre canevas sur la région voulue avec un échelle de zoom < à 1:50 000. Sinon, la visualisation peut prendre beaucoup de temps.     
+    1- Pour faciliter la visualisation en *streaming* nous recommandons fortement de placer votre canevas sur la région voulue avec un échelle de zoom < à 1:50 000. Sinon, la visualisation peut prendre beaucoup de temps.     
     **Pour une visualisation réactive et fluide, nous recommandons de télécharger le fichier GeoParquet**.
-
+    2- Définissez à l'avance le système de référence spatial de votre canevas sur `EPSG:4617`. Cela évitera les reprojections (à la volée).
 
 1. **Ouvrir le Gestionnaire de sources de données**  
    Allez dans `Layer` → `Add Layer` → `Add Vector Layer`.
@@ -87,10 +81,11 @@ Si vous avez téléchargé le fichier GeoParquet complet sur votre ordinateur, v
 
 ### Problème : QGIS se fige lors du chargement du fichier complet
 
-**Cause :** Le fichier GeoParquet complet contient plus de 10 millions d'emprises, ce qui peut ralentir QGIS si toutes les données sont chargées.
+**Cause :** Le fichier GeoParquet complet contient plus de 10 millions d'emprises, ce qui peut ralentir QGIS si toutes les données sont chargées. Si votre canevas est vide et que vous êtes quand même à une échelle de 1: 50 000, QGIS charge tout le GeoParquet. 
 
 **Solution :**
-* Utilisez Python/GDAL pour pré-filtrer les données avant de les charger dans QGIS (voir [Utilisation avec Python et GDAL](acces-python-gdal.md))
+* Assurez-vous d'avoir une autre géométrie dans votre canevas, comme une limite de projet. Alors, QGIS ne chargera pas toute la donnée. 
+* Une alternative est d'utiliser Python/GDAL pour pré-filtrer les données avant de les charger dans QGIS (voir [Utilisation avec Python et GDAL](acces-python-gdal.md))
 
 ---
 
